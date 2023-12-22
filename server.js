@@ -67,6 +67,8 @@ app.post("/webhook", async (req, reply) => {
 });
 
 const getMessages = (senderId) => {
+  const baseUrlGraphFacebook = "https://graph.facebook.com/v18.0";
+
   const mergbotResponses = [
     "merg is the werd",
     "wut",
@@ -76,14 +78,15 @@ const getMessages = (senderId) => {
     "scooby dooby skit scat scattle doot",
     "joey this is where you come in - i need more things to say",
   ];
-  const baseUrlGraphFacebook = "https://graph.facebook.com/v18.0";
+  const mergResponse =
+    mergbotResponses[Math.floor(Math.random() * mergbotResponses.length)];
+
+  console.log(
+    `${baseUrlGraphFacebook}/${process.env.PAGE_ID}/messages?recipient={id:${senderId}}&message={text:'${mergResponse}'}&messaging_type=RESPONSE&access_token=${process.env.PAT}`
+  );
 
   fetch(
-    `${baseUrlGraphFacebook}/${
-      process.env.PAGE_ID
-    }/messages?recipient={id:${senderId}}&message={text: ${
-      mergbotResponses[Math.floor(Math.random() * mergbotResponses.length)]
-    }}&messaging_type=RESPONSE&access_token=${process.env.PAT}`,
+    `${baseUrlGraphFacebook}/${process.env.PAGE_ID}/messages?recipient={id:${senderId}}&message={text:'${mergResponse}'}&messaging_type=RESPONSE&access_token=${process.env.PAT}`,
     { method: "POST" }
   )
     .then((res) => res.json())

@@ -1,7 +1,28 @@
 const fastify = require("fastify");
+const fastifyEnv = require("@fastify/env");
 const healthRoute = require("./routes/health");
 
 const app = fastify({ logger: true });
+
+const schema = {
+  type: "object",
+  required: ["PORT"],
+  properties: {
+    PORT: {
+      type: "string",
+      default: 3001,
+    },
+  },
+};
+
+const options = {
+  schema,
+  dotenv: true,
+};
+
+app.register(fastifyEnv, options).ready((err) => {
+  if (err) console.error(err);
+});
 
 app.register(healthRoute, { prefix: "/health" });
 
@@ -34,17 +55,45 @@ app.post("/webhook", async (req, reply) => {
   const body = req.body;
 
   console.log(`\u{1F7EA} Received webhook:`);
-  console.log("body.object = ", body.object);
   console.dir(body, { depth: null });
 
   if (body.object === "page") {
+    const senderId = body.entry[0].messaging[0].sender.id;
     // Returns a '200 OK' response to all requests
+    getMessages(senderId);
     return reply.status(200).send("EVENT_RECEIVED");
   }
   return reply.status(404).send("EVENT_REJECTED");
 });
 
-const port = process.env.PORT || 3000;
+const getMessages = (senderId) => {
+  const mergbotResponses = [
+    "merg is the werd",
+    "wut",
+    "FOR NO REASON",
+    "meats pies whiskeys",
+    "wanna go to a music festival?",
+    "scooby dooby skit scat scattle doot",
+    "joey this is where you come in - i need more things to say",
+  ];
+  const baseUrlGraphFacebook = "https://graph.facebook.com/v18.0";
+
+  fetch(
+    `${baseUrlGraphFacebook}/${process.env.PAGE_ID}/messages
+  ?recipient={id:${senderId}}
+  &message={text: ${
+    mergbotResponses[Math.floor(Math.random() * mergbotResponses.length)]
+  }}
+  &messaging_type=RESPONSE
+  &access_token=${process.env.PAT}`,
+    { method: "POST" }
+  )
+    .then((res) => res.json())
+    .then((res) => console.log("send msg resp: ", res))
+    .catch((err) => console.log("ruh roh: ", err));
+};
+
+const port = process.env.PORT || 3001;
 const host = "RENDER" in process.env ? "0.0.0.0" : "localhost";
 
 const start = async () => {

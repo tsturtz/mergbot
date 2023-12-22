@@ -44,9 +44,11 @@ app.post("/webhook", async (req, reply) => {
   return reply.status(404).send("EVENT_REJECTED");
 });
 
+const PORT = process.env.PORT || 3001;
+
 const start = async () => {
   try {
-    await app.listen({ port: 3001 });
+    await app.listen({ port: PORT });
   } catch (error) {
     app.log.error(error);
     process.exit(1);

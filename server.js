@@ -79,13 +79,11 @@ const getMessages = (senderId) => {
   const baseUrlGraphFacebook = "https://graph.facebook.com/v18.0";
 
   fetch(
-    `${baseUrlGraphFacebook}/${process.env.PAGE_ID}/messages
-  ?recipient={id:${senderId}}
-  &message={text: ${
-    mergbotResponses[Math.floor(Math.random() * mergbotResponses.length)]
-  }}
-  &messaging_type=RESPONSE
-  &access_token=${process.env.PAT}`,
+    `${baseUrlGraphFacebook}/${
+      process.env.PAGE_ID
+    }/messages?recipient={id:${senderId}}&message={text: ${
+      mergbotResponses[Math.floor(Math.random() * mergbotResponses.length)]
+    }}&messaging_type=RESPONSE&access_token=${process.env.PAT}`,
     { method: "POST" }
   )
     .then((res) => res.json())

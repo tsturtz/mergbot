@@ -70,12 +70,16 @@ const getMessages = (senderId) => {
   const baseUrlGraphFacebook = "https://graph.facebook.com/v18.0";
 
   const mergbotResponses = [
-    "merg is the werd",
+    "merg merg merg is the werd",
+    "wanna hang out and listen to some records? smokin doobies with my brothers.",
     "wut",
-    "FOR NO REASON",
-    "meats pies whiskeys",
-    "wanna go to a music festival?",
+    "FOR NO REASON 🏂🏂",
+    "meats pies and whiskeys",
+    "i got a hernia, a herniated disc, and a blown AMC-L-BOW. whats new with you?",
+    "wanna go to a music festival? 🤪",
     "scooby dooby skit scat scattle doot",
+    "brb cycling to chicago - NBD",
+    "could really go for a cuzzi right about now amirite guyz?",
     "joey this is where you come in - i need more things to say",
   ];
   const mergResponse =

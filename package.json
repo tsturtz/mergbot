@@ -1,5 +1,5 @@
 {
-  "name": "fastify-api",
+  "name": "mergbot",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -8,12 +8,10 @@
     "dev": "nodemon server"
   },
   "keywords": [],
-  "author": "",
+  "author": "Taylor Sturtz",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^3.18.0",
-    "fastify-swagger": "^4.7.0",
-    "uuid": "^8.3.2"
+    "fastify": "^4.25.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

@@ -44,11 +44,12 @@ app.post("/webhook", async (req, reply) => {
   return reply.status(404).send("EVENT_REJECTED");
 });
 
-const PORT = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
+const host = "RENDER" in process.env ? "0.0.0.0" : "localhost";
 
 const start = async () => {
   try {
-    await app.listen({ port: PORT });
+    app.listen({ host, port });
   } catch (error) {
     app.log.error(error);
     process.exit(1);

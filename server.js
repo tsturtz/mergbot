@@ -40,7 +40,7 @@ app.get("/webhook", (req, reply) => {
   // Check if a token and mode is in the query string of the request
   if (mode && token) {
     // Check the mode and token sent is correct
-    if (mode === "subscribe" && token === "mytoken") {
+    if (mode === "subscribe" && token === process.env.VERIFY_TOKEN) {
       // Respond with the challenge token from the request
       console.log("WEBHOOK_VERIFIED");
       reply.status(200).send(challenge);
@@ -60,13 +60,13 @@ app.post("/webhook", async (req, reply) => {
   if (body.object === "page") {
     const senderId = body.entry[0].messaging[0].sender.id;
     // Returns a '200 OK' response to all requests
-    getMessages(senderId);
+    reply(senderId);
     return reply.status(200).send("EVENT_RECEIVED");
   }
   return reply.status(404).send("EVENT_REJECTED");
 });
 
-const getMessages = (senderId) => {
+const reply = (senderId) => {
   const baseUrlGraphFacebook = "https://graph.facebook.com/v18.0";
 
   const mergbotResponses = [

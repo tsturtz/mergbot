@@ -7,7 +7,7 @@ GET http://localhost:3001/webhook
   &hub.verify_token=mytoken
   &hub.challenge=1158201444
 
-### WEBHOOK
+### WEBHOOK EVENT
 POST http://localhost:3001/webhook
 content-type: application/json
 

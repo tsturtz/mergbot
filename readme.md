@@ -1,3 +1,3 @@
 # MergBot
 
-API built with Fastify
+Messenger bot API built with Node and Fastify
